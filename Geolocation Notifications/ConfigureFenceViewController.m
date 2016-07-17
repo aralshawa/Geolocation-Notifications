@@ -22,8 +22,6 @@
 	
 	if (_presentingDetails) {
 		// Presenting details pane - configure UI and disable interaction
-		self.navigationItem.rightBarButtonItems = @[self.currLocationBtn];
-		
 		self.eventTypeSegmentedControl.selectedSegmentIndex = (_existingFence.eventType & GeolocationFenceEventTypeEntry) ? 0 : 1;
 		self.radiusTextField.text = [NSString stringWithFormat:@"%.2f", _existingFence.radius];
 		self.noteTextField.text = _existingFence.note;
