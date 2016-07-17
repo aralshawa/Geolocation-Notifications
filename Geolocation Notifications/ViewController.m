@@ -48,7 +48,7 @@
 		[_geofences addObject:fence];
 		[self.mapView addAnnotation:fence];
 		[self addRadiusOverlayForGeofence:fence];
-		self.title = [NSString stringWithFormat:@"Geofences (%zd)", _geofences.count];
+		[self updateGeofenceCount];
 	}
 }
 
@@ -58,8 +58,16 @@
 		[_geofences removeObject:fence];
 		[self.mapView removeAnnotation:fence];
 		[self removeRadiusOverlayForGeofence:fence];
-		self.title = [NSString stringWithFormat:@"Geofences (%zd)", _geofences.count];
+		[self updateGeofenceCount];
 	}
+}
+
+- (void)updateGeofenceCount
+{
+	self.title = [NSString stringWithFormat:@"Geofences (%zd)", _geofences.count];
+	
+	// Resource Limitation: Core Location restricts the number of registered geofences to a maximum of 20 per app
+	self.navigationItem.rightBarButtonItem.enabled = (_geofences.count < 20);
 }
 
 - (void)addRadiusOverlayForGeofence:(GeolocationFence *)fence {
@@ -148,6 +156,7 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
 	if ([view.annotation isKindOfClass:[GeolocationFence class]]) {
+		[self stopMonitoringGeolocationFence:(GeolocationFence *)view.annotation];
 		[self removeGeofence:(GeolocationFence *)view.annotation];
 		[self archieveGeofences];
 	}
@@ -163,10 +172,57 @@
 {
 	[controller dismissViewControllerAnimated:YES completion:NULL];
 	
-	GeolocationFence *newFence = [[GeolocationFence alloc] initWithCoordinate:coordinate radius:radius identifier:uid note:note eventType:eventType];
+	CLLocationDistance clampedRadius = (radius > _locationManager.maximumRegionMonitoringDistance) ? _locationManager.maximumRegionMonitoringDistance : radius;
+	
+	GeolocationFence *newFence = [[GeolocationFence alloc] initWithCoordinate:coordinate radius:clampedRadius identifier:uid note:note eventType:eventType];
 	[self addGeofence:newFence];
+	
+	[self beginMonitoringGeolocationFence:newFence];
+	
 	[self archieveGeofences];
 }
 
+#pragma mark - Geolocation Regions
+- (CLCircularRegion *)circularRegionForGeolocationFence:(GeolocationFence *)fence
+{
+	CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:fence.coordinate radius:fence.radius identifier:fence.uuid];
+	
+	region.notifyOnEntry = (fence.eventType & GeolocationFenceEventTypeEntry);
+	region.notifyOnExit = (fence.eventType & GeolocationFenceEventTypeExit);
+	
+	return region;
+}
+
+- (void)beginMonitoringGeolocationFence:(GeolocationFence *)fence
+{
+	if (![CLLocationManager isMonitoringAvailableForClass:[CLCircularRegion class]]) {
+		UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"Geofencing is not an available feature of on this device." preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:NULL];
+		
+		[alertController addAction:alertAction];
+		
+		[self presentViewController:alertController animated:YES completion:NULL];
+	} else {
+		if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways) {
+			UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Invalid Permissions" message:@"Please grant the application permissions to your device's location in order to recieve notifications." preferredStyle:UIAlertControllerStyleAlert];
+			UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:NULL];
+			
+			[alertController addAction:alertAction];
+			
+			[self presentViewController:alertController animated:YES completion:NULL];
+		}
+		
+		[_locationManager startMonitoringForRegion:[self circularRegionForGeolocationFence:fence]];
+	}
+}
+
+- (void)stopMonitoringGeolocationFence:(GeolocationFence *)fence
+{
+	for (CLRegion *region in _locationManager.monitoredRegions) {
+		if ([region.identifier isEqualToString:fence.uuid]) {
+			[_locationManager stopMonitoringForRegion:region];
+		}
+	}
+}
 
 @end
