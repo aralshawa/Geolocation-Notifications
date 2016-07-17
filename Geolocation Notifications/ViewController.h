@@ -11,7 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "ConfigureFenceViewController.h"
 
-@interface ViewController : UIViewController <AddGeofenceDelegate, MKMapViewDelegate>
+@interface ViewController : UIViewController <AddGeofenceDelegate, MKMapViewDelegate, CLLocationManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 

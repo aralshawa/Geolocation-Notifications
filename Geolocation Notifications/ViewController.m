@@ -16,6 +16,7 @@
 
 @implementation ViewController {
 	NSMutableArray <GeolocationFence *>* _geofences;
+	CLLocationManager *_locationManager;
 }
 
 - (void)viewDidLoad
@@ -23,6 +24,10 @@
 	[super viewDidLoad];
 	
 	_geofences = [NSMutableArray array];
+	
+	_locationManager = [[CLLocationManager alloc] init];
+	_locationManager.delegate = self;
+	[_locationManager requestAlwaysAuthorization];
 	
 	[self unarchieveGeofences];
 }
@@ -146,6 +151,11 @@
 		[self removeGeofence:(GeolocationFence *)view.annotation];
 		[self archieveGeofences];
 	}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+	self.mapView.showsUserLocation = (status == kCLAuthorizationStatusAuthorizedAlways);
 }
 
 #pragma mark - <AddGeofenceDelegate>
