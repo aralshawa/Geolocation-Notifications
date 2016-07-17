@@ -13,6 +13,10 @@
 		55AA2AD41D3AE6F800156C58 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55AA2AD21D3AE6F800156C58 /* Main.storyboard */; };
 		55AA2AD61D3AE6F800156C58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55AA2AD51D3AE6F800156C58 /* Assets.xcassets */; };
 		55AA2AD91D3AE6F800156C58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55AA2AD71D3AE6F800156C58 /* LaunchScreen.storyboard */; };
+		55AA2AE21D3AE79500156C58 /* ConfigureFenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AA2AE11D3AE79500156C58 /* ConfigureFenceViewController.m */; };
+		55AA2AE51D3AE7D800156C58 /* GeolocationFence.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AA2AE41D3AE7D800156C58 /* GeolocationFence.m */; };
+		55AA2AE91D3AEAA700156C58 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AA2AE81D3AEAA700156C58 /* MapKit.framework */; };
+		55AA2AEB1D3AEAAC00156C58 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AA2AEA1D3AEAAC00156C58 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,12 @@
 		55AA2AD51D3AE6F800156C58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55AA2AD81D3AE6F800156C58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		55AA2ADA1D3AE6F800156C58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55AA2AE01D3AE79500156C58 /* ConfigureFenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureFenceViewController.h; sourceTree = "<group>"; };
+		55AA2AE11D3AE79500156C58 /* ConfigureFenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureFenceViewController.m; sourceTree = "<group>"; };
+		55AA2AE31D3AE7D800156C58 /* GeolocationFence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeolocationFence.h; sourceTree = "<group>"; };
+		55AA2AE41D3AE7D800156C58 /* GeolocationFence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeolocationFence.m; sourceTree = "<group>"; };
+		55AA2AE81D3AEAA700156C58 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		55AA2AEA1D3AEAAC00156C58 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55AA2AEB1D3AEAAC00156C58 /* CoreLocation.framework in Frameworks */,
+				55AA2AE91D3AEAA700156C58 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				55AA2AC81D3AE6F800156C58 /* Geolocation Notifications */,
+				55AA2AEC1D3AEAB100156C58 /* Frameworks */,
 				55AA2AC71D3AE6F800156C58 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,10 +71,10 @@
 		55AA2AC81D3AE6F800156C58 /* Geolocation Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				55AA2AE71D3AE7E700156C58 /* Model */,
+				55AA2AE61D3AE7DF00156C58 /* VCs */,
 				55AA2ACC1D3AE6F800156C58 /* AppDelegate.h */,
 				55AA2ACD1D3AE6F800156C58 /* AppDelegate.m */,
-				55AA2ACF1D3AE6F800156C58 /* ViewController.h */,
-				55AA2AD01D3AE6F800156C58 /* ViewController.m */,
 				55AA2AD21D3AE6F800156C58 /* Main.storyboard */,
 				55AA2AD51D3AE6F800156C58 /* Assets.xcassets */,
 				55AA2AD71D3AE6F800156C58 /* LaunchScreen.storyboard */,
@@ -77,6 +90,35 @@
 				55AA2ACA1D3AE6F800156C58 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		55AA2AE61D3AE7DF00156C58 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				55AA2ACF1D3AE6F800156C58 /* ViewController.h */,
+				55AA2AD01D3AE6F800156C58 /* ViewController.m */,
+				55AA2AE01D3AE79500156C58 /* ConfigureFenceViewController.h */,
+				55AA2AE11D3AE79500156C58 /* ConfigureFenceViewController.m */,
+			);
+			name = VCs;
+			sourceTree = "<group>";
+		};
+		55AA2AE71D3AE7E700156C58 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				55AA2AE31D3AE7D800156C58 /* GeolocationFence.h */,
+				55AA2AE41D3AE7D800156C58 /* GeolocationFence.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		55AA2AEC1D3AEAB100156C58 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				55AA2AEA1D3AEAAC00156C58 /* CoreLocation.framework */,
+				55AA2AE81D3AEAA700156C58 /* MapKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,8 +192,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				55AA2AD11D3AE6F800156C58 /* ViewController.m in Sources */,
+				55AA2AE51D3AE7D800156C58 /* GeolocationFence.m in Sources */,
 				55AA2ACE1D3AE6F800156C58 /* AppDelegate.m in Sources */,
 				55AA2ACB1D3AE6F800156C58 /* main.m in Sources */,
+				55AA2AE21D3AE79500156C58 /* ConfigureFenceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
