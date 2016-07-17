@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *eventTypeSegmentedControl;
 @property (weak, nonatomic) IBOutlet UITextField *radiusTextField;
 @property (weak, nonatomic) IBOutlet UITextField *noteTextField;
+@property (weak, nonatomic) IBOutlet UILabel *longitudeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *latitudeLabel;
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 
@@ -27,6 +29,8 @@
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *currLocationBtn;
 
 @property (nonatomic) id<AddGeofenceDelegate> delegate;
+
+- (void)setToPresentDetailsForGeofence:(GeolocationFence *)fence;
 
 @end
 

@@ -33,7 +33,7 @@
 
 - (NSString *)subtitle {
 	NSString *eventStr = self.eventType == GeolocationFenceEventTypeEntry ? @"On Entry" : @"On Exit";
-	return [NSString stringWithFormat:@"Radius %.2f m   %@", self.radius, eventStr];
+	return [NSString stringWithFormat:@"Radius %.2f m | %@", self.radius, eventStr];
 }
 
 #pragma mark - <NSCoding>

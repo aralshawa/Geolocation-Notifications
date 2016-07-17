@@ -34,11 +34,15 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.identifier isEqualToString:@"addGeofence"]) {
+	if ([segue.identifier isEqualToString:@"addGeofence"] || [segue.identifier isEqualToString:@"updateGeofence"]) {
 		UINavigationController *navController = segue.destinationViewController;
 		ConfigureFenceViewController *configurationVC = navController.viewControllers.firstObject;
 		
 		configurationVC.delegate = self;
+		
+		if ([sender isKindOfClass:[GeolocationFence class]]) {
+			[configurationVC setToPresentDetailsForGeofence:sender];
+		}
 	}
 }
 
@@ -109,6 +113,9 @@
 }
 
 #pragma mark - <MKMapViewDelegate>
+const NSInteger DELETE_BTN_TAG = 0;
+const NSInteger DETAIL_BTN_TAG = 1;
+
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
 	static NSString *annotationViewIden = @"annotationViewIden";
@@ -121,9 +128,14 @@
 			annotationView.canShowCallout = YES;
 			
 			UIButton *removeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+			removeBtn.tag = DELETE_BTN_TAG;
 			removeBtn.frame = CGRectMake(0, 0, 23, 23);
 			[removeBtn setImage:[UIImage imageNamed:@"DeleteFence"] forState:UIControlStateNormal];
 			annotationView.leftCalloutAccessoryView = removeBtn;
+			
+			UIButton *detailDisclosure = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+			detailDisclosure.tag = DETAIL_BTN_TAG;
+			annotationView.rightCalloutAccessoryView = detailDisclosure;
 		} else {
 			annotationView.annotation = annotation;
 		}
@@ -156,9 +168,15 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
 	if ([view.annotation isKindOfClass:[GeolocationFence class]]) {
-		[self stopMonitoringGeolocationFence:(GeolocationFence *)view.annotation];
-		[self removeGeofence:(GeolocationFence *)view.annotation];
-		[self archieveGeofences];
+		if (control.tag == DELETE_BTN_TAG) {
+			// Delete fence
+			[self stopMonitoringGeolocationFence:(GeolocationFence *)view.annotation];
+			[self removeGeofence:(GeolocationFence *)view.annotation];
+			[self archieveGeofences];
+		} else if (control.tag == DETAIL_BTN_TAG) {
+			// Show fence details
+			[self performSegueWithIdentifier:@"updateGeofence" sender:view.annotation];
+		}
 	}
 }
 
