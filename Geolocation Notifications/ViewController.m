@@ -193,6 +193,11 @@
 	[self archieveGeofences];
 }
 
+- (MKCoordinateRegion)initialRegionToBeginFenceSelection
+{
+	return self.mapView.region;
+}
+
 #pragma mark - Geolocation Regions
 - (CLCircularRegion *)circularRegionForGeolocationFence:(GeolocationFence *)fence
 {

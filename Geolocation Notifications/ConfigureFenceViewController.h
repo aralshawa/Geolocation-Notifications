@@ -35,4 +35,7 @@
 
 - (void)configureFenceViewController:(ConfigureFenceViewController *)controller didAddNewFenceAtCoordinate:(CLLocationCoordinate2D) coordinate withRadius:(double)radius identifier:(NSString *)uid notificationNote:(NSString *)note eventType:(GeolocationFenceEventType)eventType;
 
+@optional
+- (MKCoordinateRegion)initialRegionToBeginFenceSelection;
+
 @end

@@ -21,6 +21,10 @@
 	self.addBtn.enabled = NO;
 	
 	self.tableView.tableFooterView = [UIView new];
+	
+	if ([self.delegate respondsToSelector:@selector(initialRegionToBeginFenceSelection)]) {
+		[self.mapView setRegion:[self.delegate initialRegionToBeginFenceSelection]];
+	}
 }
 
 - (IBAction)textFieldDidEdit:(UITextField *)sender {
