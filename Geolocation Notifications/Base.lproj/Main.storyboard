@@ -50,7 +50,7 @@
                             <constraint firstItem="vIl-VX-HQ7" firstAttribute="top" secondItem="XCx-K2-XRi" secondAttribute="bottom" id="bNN-4x-Ho6"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Geotifications (0)" id="FJi-Pv-k4U" userLabel="Geofences">
+                    <navigationItem key="navigationItem" title="Geofences (0)" id="FJi-Pv-k4U" userLabel="Geofences">
                         <barButtonItem key="leftBarButtonItem" image="CurrentLocation" id="TSZ-3I-fgM">
                             <connections>
                                 <action selector="zoomToCurrentLocation:" destination="ulb-ev-Xgo" id="Muc-zq-Aq8"/>
@@ -209,7 +209,7 @@
                             <outlet property="delegate" destination="ch8-X4-G1N" id="zP8-iA-wbb"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add Geotification" id="aTG-bz-wOq" userLabel="Add Geofence">
+                    <navigationItem key="navigationItem" title="Add Geofence" id="aTG-bz-wOq" userLabel="Add Geofence">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="w6X-4L-LBe">
                             <connections>
                                 <action selector="didCancel:" destination="ch8-X4-G1N" id="sBc-jz-D6y"/>

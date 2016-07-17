@@ -162,9 +162,20 @@
 	}
 }
 
+#pragma mark - CLLocationManager
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
 	self.mapView.showsUserLocation = (status == kCLAuthorizationStatusAuthorizedAlways);
+}
+
+- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error
+{
+	NSLog(@"Monitoring did fail for region with ID %@", region.identifier);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+	NSLog(@"Location Manager did fail with error %@", error);
 }
 
 #pragma mark - <AddGeofenceDelegate>

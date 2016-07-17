@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GeolocationFence.h"
 
 @interface AppDelegate ()
 
@@ -15,8 +16,17 @@
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	// Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+	// Location Manager Initialization
+	self.locationManager = [CLLocationManager new];
+	self.locationManager.delegate = self;
+	[self.locationManager requestAlwaysAuthorization];
+	
+	// Notications Initialization & Cleanup
+	[application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+	[[UIApplication sharedApplication] cancelAllLocalNotifications];
+	
 	return YES;
 }
 
@@ -40,6 +50,60 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Location Management
+#define kGeofenceListKey @"kGeofenceListKey"
+
+- (void)handleRegionEvent:(CLRegion *)region
+{
+	NSString *msg = [self noteForCLRegionIdentifier:region.identifier];
+	
+	if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+		// Present modal notification if the application is active
+		if (msg != nil) {
+			UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:msg preferredStyle:UIAlertControllerStyleAlert];
+			UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"Yay!" style:UIAlertActionStyleCancel handler:NULL];
+			
+			[alertController addAction:alertAction];
+			
+			[_window.rootViewController presentViewController:alertController animated:YES completion:NULL];
+		}
+	} else {
+		// Trigger a local notification is the application is inactive or in the background
+		UILocalNotification *localNotification = [UILocalNotification new];
+		localNotification.alertBody = msg;
+		localNotification.soundName = UILocalNotificationDefaultSoundName;
+		[[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+	}
+}
+
+- (NSString *)noteForCLRegionIdentifier:(NSString *)iden
+{
+	NSArray *archievedFences = [[NSUserDefaults standardUserDefaults] arrayForKey:kGeofenceListKey];
+	
+	for (NSData *savedItem in archievedFences) {
+		GeolocationFence *fence = [NSKeyedUnarchiver unarchiveObjectWithData:savedItem];
+		if ([fence.uuid isEqualToString:iden]) {
+			return fence.note;
+		}
+	}
+	
+	return nil;
+}
+
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+{
+	if ([region isKindOfClass:[CLCircularRegion class]]) {
+		[self handleRegionEvent:region];
+	}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+{
+	if ([region isKindOfClass:[CLCircularRegion class]]) {
+		[self handleRegionEvent:region];
+	}
 }
 
 @end

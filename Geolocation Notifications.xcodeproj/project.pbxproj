@@ -17,6 +17,7 @@
 		55AA2AE51D3AE7D800156C58 /* GeolocationFence.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AA2AE41D3AE7D800156C58 /* GeolocationFence.m */; };
 		55AA2AE91D3AEAA700156C58 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AA2AE81D3AEAA700156C58 /* MapKit.framework */; };
 		55AA2AEB1D3AEAAC00156C58 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55AA2AEA1D3AEAAC00156C58 /* CoreLocation.framework */; };
+		55AA2AEE1D3B25B400156C58 /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 55AA2AED1D3B25B400156C58 /* TestLocations.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		55AA2AE41D3AE7D800156C58 /* GeolocationFence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeolocationFence.m; sourceTree = "<group>"; };
 		55AA2AE81D3AEAA700156C58 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		55AA2AEA1D3AEAAC00156C58 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		55AA2AED1D3B25B400156C58 /* TestLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,9 +78,8 @@
 				55AA2ACC1D3AE6F800156C58 /* AppDelegate.h */,
 				55AA2ACD1D3AE6F800156C58 /* AppDelegate.m */,
 				55AA2AD21D3AE6F800156C58 /* Main.storyboard */,
-				55AA2AD51D3AE6F800156C58 /* Assets.xcassets */,
 				55AA2AD71D3AE6F800156C58 /* LaunchScreen.storyboard */,
-				55AA2ADA1D3AE6F800156C58 /* Info.plist */,
+				55AA2AD51D3AE6F800156C58 /* Assets.xcassets */,
 				55AA2AC91D3AE6F800156C58 /* Supporting Files */,
 			);
 			path = "Geolocation Notifications";
@@ -87,6 +88,8 @@
 		55AA2AC91D3AE6F800156C58 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				55AA2ADA1D3AE6F800156C58 /* Info.plist */,
+				55AA2AED1D3B25B400156C58 /* TestLocations.gpx */,
 				55AA2ACA1D3AE6F800156C58 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -180,6 +183,7 @@
 			files = (
 				55AA2AD91D3AE6F800156C58 /* LaunchScreen.storyboard in Resources */,
 				55AA2AD61D3AE6F800156C58 /* Assets.xcassets in Resources */,
+				55AA2AEE1D3B25B400156C58 /* TestLocations.gpx in Resources */,
 				55AA2AD41D3AE6F800156C58 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
