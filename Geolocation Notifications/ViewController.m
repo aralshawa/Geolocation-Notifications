@@ -196,6 +196,19 @@ const NSInteger DETAIL_BTN_TAG = 1;
 	NSLog(@"Location Manager did fail with error %@", error);
 }
 
+- (void)checkStateOfGeofences
+{
+	for (CLRegion *region in _locationManager.monitoredRegions) {
+		// Asynchronously request the state of each region being monitored
+		[_locationManager requestStateForRegion:region];
+	}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region
+{
+	// Manually check the state of each region
+}
+
 #pragma mark - <AddGeofenceDelegate>
 - (void)configureFenceViewController:(ConfigureFenceViewController *)controller didAddNewFenceAtCoordinate:(CLLocationCoordinate2D) coordinate withRadius:(double)radius identifier:(NSString *)uid notificationNote:(NSString *)note eventType:(GeolocationFenceEventType)eventType
 {
