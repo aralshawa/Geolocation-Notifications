@@ -54,10 +54,12 @@
 
 #pragma mark - Location Management
 #define kGeofenceListKey @"kGeofenceListKey"
+#define kEventLog @"kEventLog"
 
 - (void)handleRegionEvent:(CLRegion *)region
 {
-	NSString *msg = [self noteForCLRegionIdentifier:region.identifier];
+	GeolocationFence *fenceTriggered = [self fenceForCLRegionIdentifer:region.identifier];
+	NSString *msg = fenceTriggered.note;
 	
 	if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
 		// Present modal notification if the application is active
@@ -76,16 +78,18 @@
 		localNotification.soundName = UILocalNotificationDefaultSoundName;
 		[[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 	}
+	
+	[self recordGeolocationEventForFence:fenceTriggered];
 }
 
-- (NSString *)noteForCLRegionIdentifier:(NSString *)iden
+- (GeolocationFence *)fenceForCLRegionIdentifer:(NSString *)iden
 {
 	NSArray *archievedFences = [[NSUserDefaults standardUserDefaults] arrayForKey:kGeofenceListKey];
 	
 	for (NSData *savedItem in archievedFences) {
 		GeolocationFence *fence = [NSKeyedUnarchiver unarchiveObjectWithData:savedItem];
 		if ([fence.uuid isEqualToString:iden]) {
-			return fence.note;
+			return fence;
 		}
 	}
 	
@@ -104,6 +108,21 @@
 	if ([region isKindOfClass:[CLCircularRegion class]]) {
 		[self handleRegionEvent:region];
 	}
+}
+
+- (void)recordGeolocationEventForFence:(GeolocationFence *)fence
+{
+	NSMutableArray *itemsToArchieve = [[[NSUserDefaults standardUserDefaults] arrayForKey:kEventLog] mutableCopy];
+	
+	if (itemsToArchieve == nil) {
+		itemsToArchieve = [NSMutableArray array];
+	}
+	
+	NSArray *eventEntry = @[[NSDate date], fence];
+	[itemsToArchieve addObject:[NSKeyedArchiver archivedDataWithRootObject:eventEntry]];
+	
+	[[NSUserDefaults standardUserDefaults] setObject:itemsToArchieve forKey:kEventLog];
+	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

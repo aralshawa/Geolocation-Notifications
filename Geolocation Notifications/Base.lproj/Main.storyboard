@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -51,11 +52,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Geofences (0)" id="FJi-Pv-k4U" userLabel="Geofences">
-                        <barButtonItem key="leftBarButtonItem" image="CurrentLocation" id="TSZ-3I-fgM">
-                            <connections>
-                                <action selector="zoomToCurrentLocation:" destination="ulb-ev-Xgo" id="Muc-zq-Aq8"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem image="CurrentLocation" id="TSZ-3I-fgM">
+                                <connections>
+                                    <action selector="zoomToCurrentLocation:" destination="ulb-ev-Xgo" id="Muc-zq-Aq8"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="LogIcon" id="2UD-0F-kSe">
+                                <connections>
+                                    <segue destination="hf8-40-OTi" kind="show" id="gBg-Fx-IyQ"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="FLP-Er-ykD">
                             <connections>
                                 <segue destination="BPb-f9-Iza" kind="presentation" identifier="addGeofence" id="s62-R9-cJT"/>
@@ -70,6 +78,55 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dnb-aZ-iVd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-107" y="505"/>
+        </scene>
+        <!--Notification Log-->
+        <scene sceneID="A1a-59-Mqa">
+            <objects>
+                <viewController id="hf8-40-OTi" customClass="NotificationTranscriptViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PX2-Q2-uTM"/>
+                        <viewControllerLayoutGuide type="bottom" id="ig8-X5-Th9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gft-pK-XxF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8wC-ea-PrV">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Entries" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15b-F4-cTv">
+                                <rect key="frame" x="151" y="346" width="113" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="113" id="96V-ZD-j1V"/>
+                                    <constraint firstAttribute="height" constant="44" id="ch5-qm-2Gd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="21"/>
+                                <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8wC-ea-PrV" firstAttribute="top" secondItem="PX2-Q2-uTM" secondAttribute="bottom" constant="-64" id="6W5-bG-ivx"/>
+                            <constraint firstItem="8wC-ea-PrV" firstAttribute="leading" secondItem="gft-pK-XxF" secondAttribute="leadingMargin" constant="-20" id="8A1-LV-zCp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8wC-ea-PrV" secondAttribute="trailing" constant="-20" id="LJT-bF-sRK"/>
+                            <constraint firstItem="ig8-X5-Th9" firstAttribute="top" secondItem="8wC-ea-PrV" secondAttribute="bottom" id="X1C-Sz-Rri"/>
+                            <constraint firstItem="15b-F4-cTv" firstAttribute="centerY" secondItem="8wC-ea-PrV" secondAttribute="centerY" id="Ym9-r3-CRN"/>
+                            <constraint firstItem="15b-F4-cTv" firstAttribute="centerX" secondItem="8wC-ea-PrV" secondAttribute="centerX" id="nG5-ff-o77"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Notification Log" id="TRN-em-0oo"/>
+                    <connections>
+                        <outlet property="logTextView" destination="8wC-ea-PrV" id="6UH-Qb-ebg"/>
+                        <outlet property="noEntriesLabel" destination="15b-F4-cTv" id="ufu-Hr-Ceq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Mz-Al-r7h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="369" y="-320"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DET-gK-o4z">
@@ -188,7 +245,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Note" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAW-EA-dl0">
                                                     <rect key="frame" x="14" y="13" width="34" height="18"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -216,7 +273,7 @@
                                                         <constraint firstAttribute="width" constant="86" id="ZR4-lb-eqS"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jfq-oJ-eTR">
@@ -226,7 +283,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="rcB-On-ppg"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Latitude" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNr-Vv-QzA">
@@ -236,7 +293,7 @@
                                                         <constraint firstAttribute="width" constant="86" id="jkA-sj-0tg"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l1l-c0-AeM">
@@ -246,7 +303,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="zi8-40-EUh"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -306,6 +363,7 @@
     <resources>
         <image name="AddPin" width="75" height="75"/>
         <image name="CurrentLocation" width="15" height="15"/>
+        <image name="LogIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="s62-R9-cJT"/>

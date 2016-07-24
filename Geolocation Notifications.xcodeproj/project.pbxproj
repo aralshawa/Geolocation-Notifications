@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55020C5F1D453C0B00C7178F /* NotificationTranscriptViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55020C5E1D453C0B00C7178F /* NotificationTranscriptViewController.m */; };
 		55AA2ACB1D3AE6F800156C58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AA2ACA1D3AE6F800156C58 /* main.m */; };
 		55AA2ACE1D3AE6F800156C58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AA2ACD1D3AE6F800156C58 /* AppDelegate.m */; };
 		55AA2AD11D3AE6F800156C58 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55AA2AD01D3AE6F800156C58 /* ViewController.m */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		55020C5D1D453C0B00C7178F /* NotificationTranscriptViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationTranscriptViewController.h; sourceTree = "<group>"; };
+		55020C5E1D453C0B00C7178F /* NotificationTranscriptViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationTranscriptViewController.m; sourceTree = "<group>"; };
 		55AA2AC61D3AE6F800156C58 /* Geolocation Notifications.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Geolocation Notifications.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55AA2ACA1D3AE6F800156C58 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55AA2ACC1D3AE6F800156C58 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -102,6 +105,8 @@
 				55AA2AD01D3AE6F800156C58 /* ViewController.m */,
 				55AA2AE01D3AE79500156C58 /* ConfigureFenceViewController.h */,
 				55AA2AE11D3AE79500156C58 /* ConfigureFenceViewController.m */,
+				55020C5D1D453C0B00C7178F /* NotificationTranscriptViewController.h */,
+				55020C5E1D453C0B00C7178F /* NotificationTranscriptViewController.m */,
 			);
 			name = VCs;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 				55AA2AD11D3AE6F800156C58 /* ViewController.m in Sources */,
 				55AA2AE51D3AE7D800156C58 /* GeolocationFence.m in Sources */,
 				55AA2ACE1D3AE6F800156C58 /* AppDelegate.m in Sources */,
+				55020C5F1D453C0B00C7178F /* NotificationTranscriptViewController.m in Sources */,
 				55AA2ACB1D3AE6F800156C58 /* main.m in Sources */,
 				55AA2AE21D3AE79500156C58 /* ConfigureFenceViewController.m in Sources */,
 			);
