@@ -50,14 +50,14 @@
 	
 	NSArray *archievedEvents = [[NSUserDefaults standardUserDefaults] arrayForKey:kEventLog];
 	
-	for (NSData *entryData in archievedEvents)
+	for (NSData *entryData in [archievedEvents reverseObjectEnumerator])
 	{
 		NSArray *entry = [NSKeyedUnarchiver unarchiveObjectWithData:entryData];
 		NSDate *logDate = entry[0];
 		GeolocationFence *fence = entry[1];
 		
 		NSDateFormatter *dateFormater = [[NSDateFormatter alloc] init];
-		[dateFormater setDateFormat:@"EEEE, MMM d, yyyy H:mm:ss a"];
+		[dateFormater setDateFormat:@"EEEE, MMM d, yyyy h:mm:ss a"];
 		NSString *dateString = [dateFormater stringFromDate:logDate];
 		
 		NSString *fenceState = (fence.eventType & GeolocationFenceEventTypeEntry) ? @"Entered" : @"Left";
