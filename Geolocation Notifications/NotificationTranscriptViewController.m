@@ -10,8 +10,11 @@
 #import "GeolocationFence.h"
 
 #define kEventLog @"kEventLog"
+#define kLastSeenEvent @"kLastSeenEvent"
 
-@implementation NotificationTranscriptViewController
+@implementation NotificationTranscriptViewController {
+	NSInteger _lastSeenEntryIdx;
+}
 
 - (void)viewDidLoad
 {
@@ -44,14 +47,24 @@
 	self.logTextView.scrollEnabled = YES;
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+	[super viewDidDisappear:animated];
+	
+	// Commit the index of the last entry seen
+	[[NSUserDefaults standardUserDefaults] setInteger:_lastSeenEntryIdx forKey:kLastSeenEvent];
+}
+
 - (NSAttributedString *)attributedStringForLog
 {
 	NSMutableAttributedString *resultLog = [NSMutableAttributedString new];
 	
 	NSArray *archievedEvents = [[NSUserDefaults standardUserDefaults] arrayForKey:kEventLog];
 	
-	for (NSData *entryData in [archievedEvents reverseObjectEnumerator])
-	{
+	_lastSeenEntryIdx = [[NSUserDefaults standardUserDefaults] integerForKey:kLastSeenEvent];
+	
+	[archievedEvents enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(NSData * _Nonnull entryData, NSUInteger idx, BOOL * _Nonnull stop) {
+		
 		NSArray *entry = [NSKeyedUnarchiver unarchiveObjectWithData:entryData];
 		NSDate *logDate = entry[0];
 		GeolocationFence *fence = entry[1];
@@ -93,9 +106,19 @@
 								   value:[UIColor blueColor]
 								   range:NSMakeRange(dateString.length + 3, fenceState.length)];
 		
+		if (idx > _lastSeenEntryIdx) {
+			// Highlight all new entries
+			[attributedLogEntry addAttribute:NSBackgroundColorAttributeName
+									   value:[UIColor colorWithRed:1.00 green:1.00 blue:0.81 alpha:1.00]
+									   range:NSMakeRange(0, dateString.length)];
+		}
 		
 		[resultLog appendAttributedString:attributedLogEntry];
-	}
+		
+	}];
+	
+	// Update the last entry seen
+	_lastSeenEntryIdx = archievedEvents.count - 1;
 	
 	return resultLog;
 }
