@@ -1,4 +1,4 @@
-Geolocation\ Notifications.xcodeproj/xcuserdata/*
-Geolocation\ Notifications.xcodeproj/project.xcworkspace/xcuserdata/*
-Geolocation\ Notifications.xcworkspace/xcuserdata/*
+*.xcodeproj/xcuserdata/*
+*.xcodeproj/project.xcworkspace/xcuserdata/*
+*.xcworkspace/xcuserdata/*
 
